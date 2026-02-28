@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+
+class Icon_Button extends StatelessWidget {
+  final Function()? onPressed;
+  final Widget icon;
+  final Color? backgroundColor;
+
+  const Icon_Button({
+    super.key,
+    this.onPressed,
+    required this.icon,
+    this.backgroundColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 5, // قوة الظل
+      shape: const CircleBorder(),
+      child: CircleAvatar(
+        child: IconButton(onPressed: () {}, icon: icon),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      ),
+    );
+  }
+}

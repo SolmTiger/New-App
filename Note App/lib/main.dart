@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/Components/String.dart';
+import 'package:flutter_app/features/Note/Home_screen.dart';
 import 'package:flutter_app/features/auth/view/screens/Sign%20in_screen.dart';
 import 'package:flutter_app/features/auth/view/screens/register_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -17,10 +18,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: RegisterScreen(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: Home_Screen());
   }
 }
 
