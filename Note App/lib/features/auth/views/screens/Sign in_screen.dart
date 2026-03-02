@@ -1,14 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/features/auth/view/screens/Forgot_Password%20_screen.dart';
-import 'package:flutter_app/features/auth/view/screens/register_screen.dart';
-import 'package:flutter_app/features/auth/widgets/custom_DividerWithText.dart';
-import 'package:flutter_app/features/auth/widgets/custom_RememberMeWidget.dart';
-import 'package:flutter_app/features/auth/widgets/custom_SocialButtom0.dart';
-import 'package:flutter_app/features/auth/widgets/custom_Text.dart';
-import 'package:flutter_app/features/auth/widgets/custom_icon_button.dart';
-import 'package:flutter_app/features/auth/widgets/custom_textFromField.dart';
+import 'package:flutter_app/features/auth/views/screens/Forgot_Password%20_screen.dart';
+import 'package:flutter_app/features/auth/views/screens/register_screen.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_DividerWithText.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_RememberMeWidget.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_SocialButtom0.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_Text.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_icon_button.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_textFromField.dart';
 // ignore: unused_import
 import '/core/components/custom_button.dart'; // تأكد من صحة المسار للزر الموحد
 

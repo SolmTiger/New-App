@@ -3,12 +3,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/features/auth/view/screens/Sign%20in_screen.dart';
-import 'package:flutter_app/features/auth/widgets/custom_DividerWithText.dart';
-import 'package:flutter_app/features/auth/widgets/custom_SocialButtom0.dart';
-import 'package:flutter_app/features/auth/widgets/custom_Text.dart';
-import 'package:flutter_app/features/auth/widgets/custom_icon_button.dart';
-import 'package:flutter_app/features/auth/widgets/custom_textFromField.dart';
+import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_DividerWithText.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_SocialButtom0.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_Text.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_icon_button.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_textFromField.dart';
 import 'package:flutter_app/main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';

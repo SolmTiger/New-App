@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/Components/custom_button.dart';
-import 'package:flutter_app/features/auth/view/screens/Sign%20in_screen.dart';
-import 'package:flutter_app/features/auth/widgets/custom_Text.dart';
-import 'package:flutter_app/features/auth/widgets/custom_icon_button.dart';
-import 'package:flutter_app/features/auth/widgets/custom_textFromField.dart';
+import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_Text.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_icon_button.dart';
+import 'package:flutter_app/features/auth/views/widgets/custom_textFromField.dart';
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({super.key});
