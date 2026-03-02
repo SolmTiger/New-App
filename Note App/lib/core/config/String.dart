@@ -1,3 +1,4 @@
+// ignore: file_names
 class SupabaseStrings {
   static String supabaseUrl = 'https://yfgcdwrgprpqugolaafw.supabase.co';
   static String supabaseKey =

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class Icon_Button extends StatelessWidget {
   final Function()? onPressed;
   final Widget icon;
