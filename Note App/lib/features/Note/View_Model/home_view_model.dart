@@ -8,8 +8,12 @@ class HomeViewModel {
     FolderModel(
       title: "Personal",
       notesCount: "12 Notes",
-      colors: [const Color(0xFF42A5F5), const Color(0xFF1976D2)],
+      colors: [
+        const Color.fromARGB(255, 76, 100, 165),
+        const Color.fromARGB(255, 17, 2, 118),
+      ],
     ),
+
     FolderModel(
       title: "Work",
       notesCount: "8 Notes",

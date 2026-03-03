@@ -1,28 +1,26 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/utils/App_Colors.dart';
 import 'package:flutter_app/features/Note/View_Model/home_view_model.dart';
 import 'package:flutter_app/features/Note/views/widget/custom_Icon_Botton_Note.dart';
 import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
-// تأكد أن المسارات أدناه تطابق مجلدات مشروعك NewApp
 
 class Home_Screen extends StatelessWidget {
   const Home_Screen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // تعريف الـ ViewModel للوصول إلى بيانات المجلدات
     final HomeViewModel viewModel = HomeViewModel();
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.kBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // 1. الجزء العلوي (Header)
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 10),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Icon_Button(icon: const Icon(Icons.list_rounded)),
@@ -33,10 +31,12 @@ class Home_Screen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () => LoginScreen(),
-                      // تم تصحيح المسار ليتوافق مع أصول المشروع
-                      icon: Icon(Icons.notifications_none_sharp, size: 35),
+                    Icon_Button(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      ),
+                      icon: Image.asset('assets/images/image 5.png'),
                     ),
                   ],
                 ),
@@ -72,8 +72,7 @@ class Home_Screen extends StatelessWidget {
                           size: 30,
                           color: Colors.grey[600],
                         ),
-                        border: InputBorder
-                            .none, // لجعل الشكل انسيابي بدون حدود كلاسيكية
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
@@ -89,7 +88,6 @@ class Home_Screen extends StatelessWidget {
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
                     elevation: 5,
-                    shadowColor: Colors.black.withOpacity(0.2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25),
                     ),
@@ -114,25 +112,25 @@ class Home_Screen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // 4. عرض المجلدات الملونة (GridView)
-              Padding(
-                padding: const EdgeInsets.all(20),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 250,
                 child: GridView.builder(
-                  shrinkWrap: true,
-                  physics:
-                      const NeverScrollableScrollPhysics(), // لمنع التداخل مع التمرير الرئيسي
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: viewModel.folders.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
+                    mainAxisSpacing: 15,
                     crossAxisSpacing: 15,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 1.4,
+                    childAspectRatio:
+                        0.5, // يتحكم في طول وعرض الكارت ليناسب صفين
                   ),
-                  itemCount: viewModel.folders.length,
                   itemBuilder: (context, index) {
                     final folder = viewModel.folders[index];
                     return Container(
-                      padding: const EdgeInsets.all(20),
+                      width: 140, // عرض الكارت
+                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         gradient: LinearGradient(
@@ -150,22 +148,32 @@ class Home_Screen extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
                             ),
                           ),
-                          Text(
-                            folder.notesCount,
-                            style: const TextStyle(color: Colors.white70),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                folder.notesCount,
+                                style: const TextStyle(color: Colors.white70),
+                              ),
+                              const Icon(
+                                Icons.person_2_outlined,
+                                color: Colors.white70,
+                                size: 18,
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 10),
                         ],
                       ),
                     );
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+
+              // 5. Recent Notes Header
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -180,21 +188,32 @@ class Home_Screen extends StatelessWidget {
                   ],
                 ),
               ),
+
+              // 6. Recent Notes List
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 itemCount: viewModel.recentNotes.length,
                 itemBuilder: (context, index) {
                   final note = viewModel.recentNotes[index];
                   return Card(
                     elevation: 0,
-                    color: Colors.grey[50],
-                    margin: const EdgeInsets.only(bottom: 10),
+                    color: Colors.grey[100],
+                    margin: const EdgeInsets.only(bottom: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: ListTile(
-                      leading: Container(width: 5, color: note.color),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 5,
+                      ),
+                      leading: Container(
+                        width: 4,
+                        height: 40,
+                        color: note.color,
+                      ),
                       title: Text(
                         note.title,
                         style: const TextStyle(fontWeight: FontWeight.bold),
@@ -203,8 +222,14 @@ class Home_Screen extends StatelessWidget {
                       trailing: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.more_vert),
-                          Text(note.date, style: const TextStyle(fontSize: 10)),
+                          const Icon(Icons.more_vert, size: 20),
+                          Text(
+                            note.date,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey,
+                            ),
+                          ),
                         ],
                       ),
                     ),

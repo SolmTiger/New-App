@@ -19,7 +19,8 @@ class Icon_Button extends StatelessWidget {
       elevation: 5, // قوة الظل
       shape: const CircleBorder(),
       child: CircleAvatar(
-        child: IconButton(onPressed: () {}, icon: icon),
+        radius: 25,
+        child: icon,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
     );
