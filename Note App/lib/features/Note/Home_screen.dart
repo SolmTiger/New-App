@@ -36,7 +36,7 @@ class Home_Screen extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
                       ),
-                      icon: Image.asset('assets/images/image 5.png'),
+                      icon: Image.asset('assets/images/notifications.png'),
                     ),
                   ],
                 ),
@@ -83,7 +83,12 @@ class Home_Screen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
@@ -157,8 +162,8 @@ class Home_Screen extends StatelessWidget {
                                 folder.notesCount,
                                 style: const TextStyle(color: Colors.white70),
                               ),
-                              const Icon(
-                                Icons.person_2_outlined,
+                              Icon(
+                                folder.icon,
                                 color: Colors.white70,
                                 size: 18,
                               ),

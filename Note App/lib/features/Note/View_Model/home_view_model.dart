@@ -9,25 +9,38 @@ class HomeViewModel {
       title: "Personal",
       notesCount: "12 Notes",
       colors: [
-        const Color.fromARGB(255, 76, 100, 165),
+        const Color.fromARGB(255, 133, 163, 247),
         const Color.fromARGB(255, 17, 2, 118),
       ],
+      icon: Icons.person,
     ),
 
     FolderModel(
       title: "Work",
       notesCount: "8 Notes",
-      colors: [const Color(0xFF66BB6A), const Color(0xFF388E3C)],
+      colors: [
+        const Color.fromARGB(255, 137, 205, 141),
+        const Color.fromARGB(255, 39, 147, 44),
+      ],
+      icon: Icons.work,
     ),
     FolderModel(
       title: "Study",
       notesCount: "15 Notes",
-      colors: [const Color(0xFFAB47BC), const Color(0xFF7B1FA2)],
+      colors: [
+        const Color.fromARGB(255, 190, 92, 207),
+        const Color.fromARGB(255, 115, 34, 150),
+      ],
+      icon: Icons.book,
     ),
     FolderModel(
       title: "Ideas",
       notesCount: "6 Notes",
-      colors: [const Color(0xFFFFA726), const Color(0xFFF57C00)],
+      colors: [
+        const Color.fromARGB(255, 187, 131, 47),
+        const Color(0xFFF57C00),
+      ],
+      icon: Icons.lightbulb_outline,
     ),
   ];
 
