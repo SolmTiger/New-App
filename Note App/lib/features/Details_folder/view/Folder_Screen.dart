@@ -1,8 +1,8 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/features/Details_folder_screen/view/widgets/Text_Category.dart';
-import 'package:flutter_app/features/Details_folder_screen/view_model/Details_list_Model.dart';
+import 'package:flutter_app/features/Details_folder/view/widgets/Text_Category.dart';
+import 'package:flutter_app/features/Details_folder/view_model/Details_list_Model.dart';
 import 'package:flutter_app/features/Note/Models/folder_model.dart';
 import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
 

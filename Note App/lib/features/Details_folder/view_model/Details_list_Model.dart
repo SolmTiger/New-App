@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/features/Details_folder_screen/Model/details_Note_Model.dart';
+import 'package:flutter_app/features/Details_folder/Model/details_Note_Model.dart';
 
 class AllNotesByCategory {
   final List<Detail_note> notes = [

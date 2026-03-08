@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
-import 'package:flutter_app/features/Details_folder_screen/view/widgets/Text_Category.dart';
-import 'package:flutter_app/features/New_Folder_Screen/View_Models/Data_Colors.dart';
-import 'package:flutter_app/features/New_Folder_Screen/View_Models/Data_Icons.dart';
+import 'package:flutter_app/features/Details_folder/view/widgets/Text_Category.dart';
+import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Colors.dart';
+import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Icons.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_Text.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_text_Field.dart';
 

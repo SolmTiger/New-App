@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/config/String.dart';
-import 'package:flutter_app/features/Add_New_Notes_screen/views/New_Notes_Screen.dart';
-import 'package:flutter_app/features/New_Folder_Screen/Views/New_Folders.dart';
+import 'package:flutter_app/features/Add_New_Notes/views/New_Notes_Screen.dart';
+import 'package:flutter_app/features/Add_New_Folder/Views/New_Folders.dart';
+import 'package:flutter_app/features/Note_Details/View_Models/Note_Details_Screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart';
@@ -31,7 +32,7 @@ class MainApp extends StatelessWidget {
       ],
       // تحديد اللغات المدعومة
       supportedLocales: const [Locale('en', 'US'), Locale('ar', 'EG')],
-      home: const New_Folder(),
+      home: const Notes_Details(),
     );
   }
 }
