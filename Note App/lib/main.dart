@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/config/String.dart';
 import 'package:flutter_app/features/Add_New_Notes_screen/views/New_Notes_Screen.dart';
-import 'package:flutter_app/features/Details_folder_screen/view/Folder_Screen.dart';
+import 'package:flutter_app/features/New_Folder_Screen/Views/New_Folders.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
     url: SupabaseStrings.supabaseUrl,
     anonKey: SupabaseStrings.supabaseKey,
@@ -17,7 +20,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: New_Notes());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      // إضافة مفوضي الترجمة هنا
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        FlutterQuillLocalizations.delegate, // السطر السحري لحل مشكلة الـ Crash
+      ],
+      // تحديد اللغات المدعومة
+      supportedLocales: const [Locale('en', 'US'), Locale('ar', 'EG')],
+      home: const New_Folder(),
+    );
   }
 }
 
