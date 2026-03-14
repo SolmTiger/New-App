@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
+import 'package:flutter_app/features/Details_folder/Model/details_Note_Model.dart';
 import 'package:flutter_app/features/Details_folder/view/widgets/Text_Category.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Colors.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Icons.dart';
@@ -181,9 +182,36 @@ class _New_FolderState extends State<New_Folder> {
                           return custom_elevatedbutton(
                             text: 'Create Folder',
                             onpressed: () {
-                              context.read<NewFolderCubit>().AddFolder(
-                                
+                              () {
+                                if (text_Controller.text.isNotEmpty) {
+                                  // 1. إنشاء كائن المجلد الجديد بالبيانات المختارة
+                                  FolderModel folder = FolderModel(
+                                    title: text_Controller.text.trim(),
+                                    notesCount: "0",
+                                    colors: [
+                                      myColors[selectedColorIndex],
+                                    ], // نمرر اللون المختار في قائمة
+                                    icon: myIcons[selectedIconIndex],
+                                  );
 
+                                  // 2. إرسال الكائن للكيوبيت
+                                  context.read<NewFolderCubit>().AddFolder(
+                                    newfolder: folder,
+                                  );
+
+                                  // 3. العودة للصفحة السابقة
+                                  Navigator.pop(context);
+                                } else {
+                                  // إظهار تنبيه لو الاسم فارغ
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Please enter a folder name",
+                                      ),
+                                    ),
+                                  );
+                                }
+                              };
                             },
                           );
                         },
