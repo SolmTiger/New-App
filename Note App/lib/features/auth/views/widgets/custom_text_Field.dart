@@ -5,6 +5,7 @@ class custom_Text_Field extends StatelessWidget {
   final bool? obscureText;
   final Widget? icon;
   final Color? fillColor;
+  final TextEditingController? controller;
 
   const custom_Text_Field({
     super.key,
@@ -12,6 +13,7 @@ class custom_Text_Field extends StatelessWidget {
     required this.obscureText,
     this.icon,
     this.fillColor,
+    this.controller,
   });
 
   @override

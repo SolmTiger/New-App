@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
+import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
 import 'package:flutter_app/features/Details_folder/view/widgets/Text_Category.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Colors.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Icons.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_Text.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_text_Field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class New_Folder extends StatefulWidget {
   const New_Folder({super.key});
@@ -15,6 +17,9 @@ class New_Folder extends StatefulWidget {
 }
 
 class _New_FolderState extends State<New_Folder> {
+  TextEditingController text_Controller = TextEditingController();
+  TextEditingController icon_Controller = TextEditingController();
+  TextEditingController color_Controller = TextEditingController();
   int selectedColorIndex = 0;
   int selectedIconIndex = 1;
   @override
@@ -90,6 +95,7 @@ class _New_FolderState extends State<New_Folder> {
                       ),
                       SizedBox(height: 10),
                       custom_Text_Field(
+                        controller: text_Controller,
                         hintText: 'Work Projects',
                         obscureText: false,
                       ),
@@ -170,7 +176,18 @@ class _New_FolderState extends State<New_Folder> {
                         }),
                       ),
                       SizedBox(height: 25),
-                      custom_elevatedbutton(text: 'Create Folder'),
+                      BlocBuilder<NewFolderCubit, NewFolderState>(
+                        builder: (context, state) {
+                          return custom_elevatedbutton(
+                            text: 'Create Folder',
+                            onpressed: () {
+                              context.read<NewFolderCubit>().AddFolder(
+                                
+
+                            },
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

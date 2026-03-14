@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/core/Components/Custom_Text_From_Field.dart';
 import 'package:flutter_app/core/Components/Text_Field.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
 import 'package:flutter_app/core/utils/App_Colors.dart';
 import 'package:flutter_app/features/Details_folder/view/widgets/Text_Category.dart';
-import 'package:flutter_app/features/auth/views/widgets/custom_icon_button.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
 class New_Notes extends StatefulWidget {

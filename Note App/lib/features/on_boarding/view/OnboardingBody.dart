@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
 import 'package:flutter_app/features/on_boarding/model/on-boarding_Model.dart';
 
 class OnboardingBody extends StatelessWidget {
@@ -28,9 +29,17 @@ class OnboardingBody extends StatelessWidget {
                     curve: Curves.easeInOut,
                   );
                 },
-                child: const Text(
-                  "Skip",
-                  style: TextStyle(color: Colors.white),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
+                  child: const Text(
+                    "Skip",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
               Icon(Icons.arrow_forward_ios_outlined, color: Colors.white),

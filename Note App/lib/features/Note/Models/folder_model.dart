@@ -4,7 +4,7 @@ class FolderModel {
   final String title;
   final String notesCount;
   final List<Color> colors;
-  final IconData? icon;
+  final IconData icon;
 
   FolderModel({
     required this.title,

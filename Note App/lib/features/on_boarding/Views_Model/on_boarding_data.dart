@@ -2,24 +2,21 @@ import 'package:flutter_app/features/on_boarding/model/on-boarding_Model.dart';
 
 List<OnboardingModel> onboardingPages = [
   OnboardingModel(
-    image: 'assets/images/image_1.png',
-    title: 'Shop with our \nsingle-use cards',
-    description:
-        'Buy from new online stores with extra, single-use card numbers that won’t work twice.',
+    image: 'assets/images/note/note1.png',
+    title: 'Capture Your Ideas Now',
+    description: 'Store your creative thoughts before they fade away .',
     color: '0xFF336DF6',
   ),
   OnboardingModel(
-    image: 'assets/images/image_4.png',
-    title: 'Start saving \nthe easy way',
-    description:
-        'Set money aside without thinking about it – include your spare change and regular transfers.',
+    image: 'assets/images/note/note2.png',
+    title: 'Organize Your Life Simply',
+    description: ' Keep your daily routines and plans perfectly structured .',
     color: '0xFF336DF6',
   ),
   OnboardingModel(
-    image: 'assets/images/image_5.png',
-    title: 'Keep your budget \non track with smart analytics',
-    description:
-        'Get a clear view of your spendings, know exactly where your money is going.',
+    image: 'assets/images/note/note3.png',
+    title: 'Never Forget Important Tasks',
+    description: 'Keep your daily routines and plans perfectly structured .',
     color: '0xFF336DF6',
   ),
 ];

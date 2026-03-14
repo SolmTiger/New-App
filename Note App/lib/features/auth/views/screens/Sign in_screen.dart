@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/features/Note/Home_screen.dart';
 import 'package:flutter_app/features/auth/views/screens/Forgot_Password%20_screen.dart';
 import 'package:flutter_app/features/auth/views/screens/register_screen.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_DividerWithText.dart';
@@ -141,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
               // زر نسيت كلمة المرور
               CustomButton(
                 text: 'sign in',
-                onPressed: () => RegisterScreen(),
+                onPressed: () => Home_Screen(),
                 color: Color(0xFFe5fd5e),
               ),
               const SizedBox(height: 20),

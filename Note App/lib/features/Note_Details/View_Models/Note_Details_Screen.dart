@@ -115,6 +115,7 @@ class Notes_Details extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),

@@ -1,9 +1,13 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/App_Colors.dart';
+import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
+import 'package:flutter_app/features/Add_New_Folder/Views/New_Folders_screen.dart';
+import 'package:flutter_app/features/Details_folder/Model/details_Note_Model.dart';
 import 'package:flutter_app/features/Note/View_Model/home_view_model.dart';
 import 'package:flutter_app/features/Note/views/widget/custom_Icon_Botton_Note.dart';
 import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home_Screen extends StatelessWidget {
   const Home_Screen({super.key});
@@ -86,7 +90,7 @@ class Home_Screen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                      MaterialPageRoute(builder: (context) => New_Folder()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -109,8 +113,8 @@ class Home_Screen extends StatelessWidget {
                       Text(
                         "Create New Folder",
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                     ],
@@ -120,57 +124,85 @@ class Home_Screen extends StatelessWidget {
               SizedBox(height: 20),
               SizedBox(
                 height: 250,
-                child: GridView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  scrollDirection: Axis.horizontal,
-                  itemCount: viewModel.folders.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15,
-                    childAspectRatio:
-                        0.5, // يتحكم في طول وعرض الكارت ليناسب صفين
-                  ),
-                  itemBuilder: (context, index) {
-                    final folder = viewModel.folders[index];
-                    return Container(
-                      width: 140, // عرض الكارت
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                          colors: folder.colors,
-                          begin: Alignment.bottomRight,
-                          end: Alignment.topLeft,
+                child: BlocBuilder<NewFolderCubit, NewFolderState>(
+                  builder: (context, state) {
+                    List<FolderModel> displayedFolders = [];
+                    if (state is NewFolderSuccess) {
+                      displayedFolders = state.folders;
+                    }
+
+                    // 2. عرض رسالة في حال عدم وجود مجلدات حتى الآن
+                    if (displayedFolders.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          "No folders added yet",
+                          style: TextStyle(color: Colors.grey),
                         ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            folder.title,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                      );
+                    }
+
+                    return GridView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: displayedFolders.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15,
+                            childAspectRatio:
+                                0.5, // يتحكم في طول وعرض الكارت ليناسب صفين
+                          ),
+                      itemBuilder: (context, index) {
+                        final folder = viewModel.folders[index];
+                        return Container(
+                          width: 140, // عرض الكارت
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            gradient: LinearGradient(
+                              colors: folder.colors,
+                              begin: Alignment.bottomRight,
+                              end: Alignment.topLeft,
                             ),
                           ),
-                          Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                folder.notesCount,
-                                style: const TextStyle(color: Colors.white70),
+                                folder.title,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 27,
+                                ),
                               ),
-                              Icon(
-                                folder.icon,
-                                color: Colors.white70,
-                                size: 18,
+                              Row(
+                                children: [
+                                  SizedBox(width: 10),
+                                  Text(
+                                    folder.notesCount,
+                                    style: const TextStyle(
+                                      color: Colors.white60,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(width: 90),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 15),
+                                    child: Icon(
+                                      folder.icon,
+                                      color: Colors.white70,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     );
                   },
                 ),
