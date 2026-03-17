@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/config/String.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
+import 'package:flutter_app/features/Add_New_Folder/Views/New_Folders_screen.dart';
+import 'package:flutter_app/features/Add_New_Notes/views/New_Notes_Screen.dart';
 import 'package:flutter_app/features/Note/Home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

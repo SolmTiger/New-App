@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
+import 'package:flutter_app/features/Add_New_Folder/Views/widget/custom_AppBar.dart';
 import 'package:flutter_app/features/Details_folder/Model/details_Note_Model.dart';
 import 'package:flutter_app/features/Details_folder/view/widgets/Text_Category.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Colors.dart';
@@ -33,44 +34,7 @@ class _New_FolderState extends State<New_Folder> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 30),
-            Row(
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back, size: 35),
-                    ),
-                    SizedBox(width: 50),
-                    Text_Category(text: 'Add New Folder', color: Colors.black),
-
-                    SizedBox(width: 30),
-                    GestureDetector(
-                      onTap: () {
-                        SystemSound.play(SystemSoundType.click);
-                      },
-
-                      child: Container(
-                        child: Center(
-                          child: Text(
-                            'save',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                          ),
-                        ),
-                        height: 35,
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 29, 72, 213),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            custom_AppBar(),
             SizedBox(height: 10),
 
             Padding(
@@ -195,9 +159,6 @@ class _New_FolderState extends State<New_Folder> {
                                   );
 
                                   // 2. إرسال الكائن للكيوبيت
-                                  context.read<NewFolderCubit>().AddFolder(
-                                    newfolder: folder,
-                                  );
 
                                   // 3. العودة للصفحة السابقة
                                   Navigator.pop(context);

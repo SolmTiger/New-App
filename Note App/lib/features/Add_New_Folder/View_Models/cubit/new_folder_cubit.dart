@@ -4,12 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'new_folder_state.dart';
 
 class NewFolderCubit extends Cubit<NewFolderState> {
-  NewFolderCubit() : super(NewFolderState());
+  NewFolderCubit() : super(NewFolderState(folders: []));
 
   List<FolderModel> allFolders = [];
-
-  void AddFolder({required FolderModel newfolder}) {
-    allFolders.add(newfolder);
-    emit(NewFolderSuccess(folders: allFolders));
-  }
 }

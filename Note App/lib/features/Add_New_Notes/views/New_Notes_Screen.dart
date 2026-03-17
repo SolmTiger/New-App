@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/Components/Text_Field.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
 import 'package:flutter_app/core/utils/App_Colors.dart';
+import 'package:flutter_app/features/Add_New_Notes/views/widgets/Content_Details.dart';
+import 'package:flutter_app/features/Add_New_Notes/views/widgets/custom_AppBar.dart';
 import 'package:flutter_app/features/Details_folder/view/widgets/Text_Category.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
@@ -32,25 +34,7 @@ class _New_NotesState extends State<New_Notes> {
                     SizedBox(height: 20),
                     //الجزء الخاص  appbar
                     //
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(Icons.arrow_back, size: 35),
-                            ),
-                            SizedBox(width: 60),
-                            Text_Category(
-                              text: 'Add New Note',
-                              color: Colors.black,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    Custom_AppBar(),
                     SizedBox(height: 10),
                     Divider(color: Colors.grey, thickness: 2, height: 10),
                     SizedBox(height: 10),
@@ -68,75 +52,7 @@ class _New_NotesState extends State<New_Notes> {
                     ),
                     SizedBox(height: 30),
                     Text_field(text: 'Content:'),
-                    Container(
-                      height: 300,
-
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 254, 253, 253),
-                        borderRadius: BorderRadius.circular(30),
-                        border: BoxBorder.all(color: Colors.black),
-                      ),
-
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: QuillEditor.basic(
-                              config: QuillEditorConfig(
-                                autoFocus: true,
-                                placeholder: 'Start typing your note...',
-                                checkBoxReadOnly: false,
-                                padding: EdgeInsets.all(15),
-                              ),
-
-                              controller: _controller,
-                            ),
-                          ),
-                          Divider(height: 1, thickness: 1),
-                          SizedBox(height: 10),
-
-                          QuillSimpleToolbar(
-                            controller: _controller,
-                            config: QuillSimpleToolbarConfig(
-                              multiRowsDisplay: false,
-                              showFontSize: false,
-                              showFontFamily: false,
-                              showBoldButton: true,
-                              showItalicButton: true,
-                              showUnderLineButton: false,
-                              showStrikeThrough: false,
-                              showListBullets: true,
-                              showListNumbers: false,
-                              showAlignmentButtons: false,
-                              showSearchButton: false,
-                              showColorButton: false,
-                              showBackgroundColorButton: false,
-                              showClearFormat: false,
-                              buttonOptions: QuillSimpleToolbarButtonOptions(
-                                base: QuillToolbarBaseButtonOptions(
-                                  iconTheme: QuillIconTheme(
-                                    iconButtonSelectedData: IconButtonData(
-                                      style: ButtonStyle(
-                                        foregroundColor:
-                                            MaterialStateProperty.all(
-                                              Colors.blueAccent,
-                                            ),
-                                      ),
-                                    ),
-                                    iconButtonUnselectedData: IconButtonData(
-                                      style: IconButton.styleFrom(
-                                        foregroundColor: Colors.grey.shade700,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                        ],
-                      ),
-                    ),
+                    Custom_contentDetails(controller: _controller),
                     SizedBox(height: 20),
                     Text_Category(text: 'Folders:"'),
                     SizedBox(height: 10),

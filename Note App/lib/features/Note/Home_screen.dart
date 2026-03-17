@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/App_Colors.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
-import 'package:flutter_app/features/Add_New_Folder/Views/New_Folders_screen.dart';
 import 'package:flutter_app/features/Details_folder/Model/details_Note_Model.dart';
-import 'package:flutter_app/features/Note/View_Model/home_view_model.dart';
-import 'package:flutter_app/features/Note/views/widget/custom_Icon_Botton_Note.dart';
-import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
+import 'package:flutter_app/features/Note/View_Model/View_Note_Model.dart';
+import 'package:flutter_app/features/Note/View_Model/view_Folder_model.dart';
+import 'package:flutter_app/features/Note/views/widgets/elevatedButton_details.dart';
+import 'package:flutter_app/features/Note/views/widgets/search_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home_Screen extends StatelessWidget {
@@ -14,7 +14,8 @@ class Home_Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeViewModel viewModel = HomeViewModel();
+    final ViewModelFolder folderModel = ViewModelFolder();
+    final ViewModelNote noteModel = ViewModelNote();
 
     return Scaffold(
       backgroundColor: AppColors.kBackgroundColor,
@@ -22,114 +23,19 @@ class Home_Screen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Icon_Button(icon: const Icon(Icons.list_rounded)),
-                    const Text(
-                      "My Folders",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Icon_Button(
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      ),
-                      icon: Image.asset('assets/images/notifications.png'),
-                    ),
-                  ],
-                ),
-              ),
-
+              AppBar(),
               // 2. شريط البحث (Search Bar)
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: "Search...",
-                        hintStyle: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 18,
-                        ),
-                        prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                        suffixIcon: Icon(
-                          Icons.mic_none_rounded,
-                          size: 30,
-                          color: Colors.grey[600],
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
+              Search_Field(),
               // 3. زر إنشاء مجلد جديد
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => New_Folder()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 20,
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add, color: Colors.blue, size: 28),
-                      SizedBox(width: 10),
-                      Text(
-                        "Create New Folder",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              elevatedButton_details(),
+
               SizedBox(height: 20),
               SizedBox(
                 height: 250,
                 child: BlocBuilder<NewFolderCubit, NewFolderState>(
                   builder: (context, state) {
                     List<FolderModel> displayedFolders = [];
-                    if (state is NewFolderSuccess) {
-                      displayedFolders = state.folders;
-                    }
+                    if (state is NewFolderState) {}
 
                     // 2. عرض رسالة في حال عدم وجود مجلدات حتى الآن
                     if (displayedFolders.isEmpty) {
@@ -140,6 +46,7 @@ class Home_Screen extends StatelessWidget {
                         ),
                       );
                     }
+                    ;
 
                     return GridView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -154,7 +61,7 @@ class Home_Screen extends StatelessWidget {
                                 0.5, // يتحكم في طول وعرض الكارت ليناسب صفين
                           ),
                       itemBuilder: (context, index) {
-                        final folder = viewModel.folders[index];
+                        final folder = folderModel.folders[index];
                         return Container(
                           width: 140, // عرض الكارت
                           padding: const EdgeInsets.all(15),
@@ -231,9 +138,9 @@ class Home_Screen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemCount: viewModel.recentNotes.length,
+                itemCount: noteModel.recentNotes.length,
                 itemBuilder: (context, index) {
-                  final note = viewModel.recentNotes[index];
+                  final note = noteModel.recentNotes[index];
                   return Card(
                     elevation: 0,
                     color: Colors.grey[100],
