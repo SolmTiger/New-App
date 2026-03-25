@@ -22,6 +22,8 @@ class AllNotesByCategory {
 class folderData {
   final List<FolderModel> foldersData = [
     FolderModel(
+      id: DateTime.now().toString(),
+
       title: 'Personal',
       notesCount: '12',
       colors: [

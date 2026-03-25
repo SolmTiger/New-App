@@ -1,7 +1,4 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
 import 'package:flutter_app/features/Add_New_Folder/Views/widget/custom_AppBar.dart';
@@ -21,150 +18,139 @@ class New_Folder extends StatefulWidget {
 
 class _New_FolderState extends State<New_Folder> {
   TextEditingController text_Controller = TextEditingController();
-  TextEditingController icon_Controller = TextEditingController();
-  TextEditingController color_Controller = TextEditingController();
   int selectedColorIndex = 0;
   int selectedIconIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 254, 253, 253),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 30),
-            custom_AppBar(),
-            SizedBox(height: 10),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                height: 500,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 246, 242, 242),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 20),
-
-                      custom_Text(
-                        text: 'Folder Name',
-                        fontSize: 25,
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: 10),
-                      custom_Text_Field(
-                        controller: text_Controller,
-                        hintText: 'Work Projects',
-                        obscureText: false,
-                      ),
-                      SizedBox(height: 25),
-                      custom_Text(
-                        text: 'Choose Color',
-                        fontSize: 25,
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: 10),
-                      Wrap(
-                        spacing: 10,
-                        children: List.generate(myColors.length, (index) {
-                          return GestureDetector(
-                            onTap: () =>
-                                setState(() => selectedColorIndex = index),
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: myColors[index],
-                                borderRadius: BorderRadius.circular(10),
-                                border: selectedColorIndex == index
-                                    ? Border.all(
-                                        color: Colors.blueAccent,
-                                        width: 4,
-                                        strokeAlign: 1,
-                                      ) // إطار خارجي للمختار
+      body: SingleChildScrollView(
+        // أضفت SingleChildScrollView عشان الكيبورد ما تعملش مشكلة
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 30),
+              custom_AppBar(),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 246, 242, 242),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        custom_Text(
+                          text: 'Folder Name',
+                          fontSize: 25,
+                          color: Colors.black,
+                        ),
+                        const SizedBox(height: 10),
+                        custom_Text_Field(
+                          controller: text_Controller,
+                          hintText: 'Work Projects',
+                          obscureText: false,
+                        ),
+                        const SizedBox(height: 25),
+                        custom_Text(
+                          text: 'Choose Color',
+                          fontSize: 25,
+                          color: Colors.black,
+                        ),
+                        const SizedBox(height: 10),
+                        Wrap(
+                          spacing: 10,
+                          children: List.generate(myColors.length, (index) {
+                            return GestureDetector(
+                              onTap: () =>
+                                  setState(() => selectedColorIndex = index),
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: myColors[index],
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: selectedColorIndex == index
+                                      ? Border.all(
+                                          color: Colors.blueAccent,
+                                          width: 4,
+                                        )
+                                      : null,
+                                ),
+                                child: selectedColorIndex == index
+                                    ? const Icon(
+                                        Icons.check,
+                                        color: Colors.white,
+                                      )
                                     : null,
                               ),
-                              child: selectedColorIndex == index
-                                  ? const Icon(
-                                      Icons.check,
-                                      color: Colors.white,
-                                    ) // علامة الصح
-                                  : null,
-                            ),
-                          );
-                        }),
-                      ),
-                      SizedBox(height: 25),
-                      custom_Text(
-                        text: 'Choose Color',
-                        fontSize: 25,
-                        color: Colors.black,
-                      ),
-                      SizedBox(height: 10),
-                      Wrap(
-                        spacing: 10,
-                        children: List.generate(myIcons.length, (index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedIconIndex = index;
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: selectedIconIndex == index
-                                    ? Border.all(
-                                        color: Colors.blueAccent,
-                                        width: 4,
-                                        strokeAlign: 1,
-                                      ) // إطار خارجي للمختار
-                                    : null,
+                            );
+                          }),
+                        ),
+                        const SizedBox(height: 25),
+                        // تم تغيير النص هنا لـ Choose Icon
+                        custom_Text(
+                          text: 'Choose Icon',
+                          fontSize: 25,
+                          color: Colors.black,
+                        ),
+                        const SizedBox(height: 10),
+                        Wrap(
+                          spacing: 10,
+                          children: List.generate(myIcons.length, (index) {
+                            return GestureDetector(
+                              onTap: () =>
+                                  setState(() => selectedIconIndex = index),
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: selectedIconIndex == index
+                                      ? Border.all(
+                                          color: Colors.blueAccent,
+                                          width: 4,
+                                        )
+                                      : null,
+                                ),
+                                child: Icon(
+                                  myIcons[index],
+                                  // جعلنا الأيقونة تتبع اللون المختار
+                                  color: myColors[selectedColorIndex],
+                                  size: 30,
+                                ),
                               ),
-                              child: Icon(
-                                myIcons[index],
-                                color: myColors[index],
-                                size: 50,
-                              ),
-                            ),
-                          );
-                        }),
-                      ),
-                      SizedBox(height: 25),
-                      BlocBuilder<NewFolderCubit, NewFolderState>(
-                        builder: (context, state) {
-                          return custom_elevatedbutton(
-                            text: 'Create Folder',
-                            onpressed: () {
-                              () {
+                            );
+                          }),
+                        ),
+                        const SizedBox(height: 35),
+                        BlocBuilder<NewFolderCubit, NewFolderState>(
+                          builder: (context, state) {
+                            return custom_elevatedbutton(
+                              text: 'Create Folder',
+                              onpressed: () {
                                 if (text_Controller.text.isNotEmpty) {
-                                  // 1. إنشاء كائن المجلد الجديد بالبيانات المختارة
-                                  FolderModel folder = FolderModel(
+                                  final folder = FolderModel(
+                                    id: DateTime.now().toIso8601String(),
                                     title: text_Controller.text.trim(),
                                     notesCount: "0",
-                                    colors: [
-                                      myColors[selectedColorIndex],
-                                    ], // نمرر اللون المختار في قائمة
+                                    colors: [myColors[selectedColorIndex]],
                                     icon: myIcons[selectedIconIndex],
                                   );
 
-                                  // 2. إرسال الكائن للكيوبيت
-
-                                  // 3. العودة للصفحة السابقة
+                                  context.read<NewFolderCubit>().addFolder(
+                                    newFolder: folder,
+                                  );
                                   Navigator.pop(context);
                                 } else {
-                                  // إظهار تنبيه لو الاسم فارغ
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text(
@@ -173,17 +159,17 @@ class _New_FolderState extends State<New_Folder> {
                                     ),
                                   );
                                 }
-                              };
-                            },
-                          );
-                        },
-                      ),
-                    ],
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

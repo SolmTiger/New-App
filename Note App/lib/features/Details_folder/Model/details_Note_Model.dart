@@ -15,6 +15,7 @@ class FolderModel {
     required this.notesCount,
     required this.colors,
     this.icon,
+    required String id,
   });
 }
 
