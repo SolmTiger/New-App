@@ -5,6 +5,7 @@ class ViewModelFolder {
   // قائمة المجلدات كما تظهر في التصميم
   final List<FolderModel> folders = [
     FolderModel(
+      id: '1',
       title: "Personal",
       notesCount: "12 Notes",
       colors: [
@@ -15,6 +16,8 @@ class ViewModelFolder {
     ),
 
     FolderModel(
+      id: '2',
+
       title: "Work",
       notesCount: "8 Notes",
       colors: [
@@ -24,6 +27,8 @@ class ViewModelFolder {
       icon: Icons.work,
     ),
     FolderModel(
+      id: '3',
+
       title: "Study",
       notesCount: "15 Notes",
       colors: [
@@ -33,6 +38,8 @@ class ViewModelFolder {
       icon: Icons.book,
     ),
     FolderModel(
+      id: '4',
+
       title: "Ideas",
       notesCount: "6 Notes",
       colors: [
