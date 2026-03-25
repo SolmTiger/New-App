@@ -4,18 +4,23 @@ import 'package:flutter_app/features/Note/Models/Note_Model.dart';
 class ViewModelNote {
   final List<NoteModel> recentNotes = [
     NoteModel(
+      id: '1',
       title: "Shopping List",
       category: "Personal",
       date: "Today",
       color: Colors.red,
     ),
     NoteModel(
+      id: '1',
+
       title: "Meeting Summary",
       category: "Work",
       date: "Yesterday",
       color: Colors.green,
     ),
     NoteModel(
+      id: '1',
+
       title: "Lecture 5",
       category: "Study",
       date: "2 days ago",

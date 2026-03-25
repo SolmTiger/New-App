@@ -8,6 +8,8 @@ class FolderModel {
   final List<Color> colors;
   final IconData? icon;
 
+  var id;
+
   FolderModel({
     required this.title,
     required this.notesCount,
