@@ -10,6 +10,7 @@ import 'package:flutter_app/features/auth/views/widgets/custom_SocialButtom0.dar
 import 'package:flutter_app/features/auth/views/widgets/custom_Text.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_icon_button.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_textFromField.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 // ignore: unused_import
 import '/core/components/custom_button.dart'; // تأكد من صحة المسار للزر الموحد
 
@@ -141,9 +142,39 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // زر نسيت كلمة المرور
               CustomButton(
-                text: 'sign in',
-                onPressed: () => Home_Screen(),
-                color: Color(0xFFe5fd5e),
+                text: 'Sign In',
+                color: const Color(0xFFe5fd5e),
+                onPressed: () async {
+                  try {
+                    // 1. عملية تسجيل الدخول باستخدام Supabase
+                    final response = await Supabase.instance.client.auth
+                        .signInWithPassword(
+                          email: _emailController.text
+                              .trim(), // تأكد إن عندك Controller للإيميل
+                          password: _passwordController.text
+                              .trim(), // تأكد إن عندك Controller للباسورد
+                        );
+
+                    // 2. التحقق إذا كان المستخدم نجح في الدخول
+                    if (response.user != null) {
+                      // إذا البيانات صحيحة، ننتقل للشاشة الرئيسية
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Home_Screen(),
+                        ),
+                      );
+                    }
+                  } catch (e) {
+                    // 3. في حالة وجود خطأ (إيميل غلط أو باسورد غلط)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("خطأ في تسجيل الدخول: ${e.toString()}"),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
               ),
               const SizedBox(height: 20),
 

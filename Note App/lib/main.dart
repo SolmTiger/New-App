@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/config/String.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
+import 'package:flutter_app/features/auth/views/screens/Sign%20in_screen.dart';
 import 'package:flutter_app/features/on_boarding/view/OnboardingMain.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -35,7 +36,7 @@ class MainApp extends StatelessWidget {
         ],
         // تحديد اللغات المدعومة
         supportedLocales: const [Locale('en', 'US'), Locale('ar', 'EG')],
-        home: OnboardingMain(),
+        home: LoginScreen(),
       ),
     );
   }
