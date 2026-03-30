@@ -1,4 +1,4 @@
-import 'package:flutter_app/features/Details_folder/Model/details_Note_Model.dart';
+import 'package:flutter_app/features/Note/Models/folder_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -6,37 +6,53 @@ part 'new_folder_state.dart';
 
 class NewFolderCubit extends Cubit<NewFolderState> {
   final _supabase = Supabase.instance.client;
+  List<FolderModel> allFolders = [];
 
   NewFolderCubit() : super(NewFolderInitial());
 
-  List<FolderModel> allFolders = [];
+  Future<void> fetchFolders() async {
+    try {
+      emit(NewFolderLoading());
+      final data = await _supabase.from('Folder').select().order('created_at');
 
-  // دالة لإضافة مجلد جديد وحفظه في السوبابيز
+      allFolders = (data as List)
+          .map((json) => FolderModel.fromMap(json))
+          .toList();
+
+      emit(NewFolderSuccess(folders: List.from(allFolders)));
+    } catch (e) {
+      emit(NewFolderError(message: "Error fetching: ${e.toString()}"));
+    }
+  }
+
   void addFolder({required FolderModel newFolder}) async {
     try {
       emit(NewFolderLoading());
 
-      // --- الإضافة الجديدة هنا (الربط مع قاعدة البيانات) ---
+      // 1. الحفظ في سوبابيز
       await _supabase.from('Folder').insert({
-        'titel': newFolder.title, // تأكد من كتابتها 'titel' كما في جدولك
-        'icon': newFolder.icon?.codePoint.toString(),
+        'titel': newFolder.title,
+        'icon': newFolder.icon.codePoint
+            .toString(), // شيلنا الـ ? للتأكد من وجود قيمة
         'color': newFolder.colors[0].value,
       });
-      // -----------------------------------------------
 
-      // تحديث القائمة المحلية (اختياري لو هتعمل Fetch بعدها)
-      allFolders.add(newFolder);
-
-      emit(NewFolderSuccess(folders: List.from(allFolders)));
+      // 2. بدل ما تضيف يدوي، اسحب الداتا كاملة بالـ IDs الجديدة
+      await fetchFolders();
     } catch (e) {
-      // تعديل الرسالة لتظهر الخطأ الحقيقي لو حصلت مشكلة في الشبكة
       emit(NewFolderError(message: "Failed to add folder: ${e.toString()}"));
     }
   }
 
-  // دالة لمسح مجلد معين بالـ ID
-  void deleteFolder(String id) {
-    allFolders.removeWhere((folder) => folder.id == id);
-    emit(NewFolderSuccess(folders: List.from(allFolders)));
+  void deleteFolder(String id) async {
+    try {
+      // تحويل الـ id لـ int لأن نوعه في الجدول int8
+      await _supabase.from('Folder').delete().match({'id': int.parse(id)});
+
+      // تحديث الواجهة بعد المسح
+      await fetchFolders();
+    } catch (e) {
+      emit(NewFolderError(message: "Delete failed: ${e.toString()}"));
+    }
   }
 }

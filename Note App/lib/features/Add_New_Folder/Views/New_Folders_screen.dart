@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
 import 'package:flutter_app/features/Add_New_Folder/Views/widget/custom_AppBar.dart';
-import 'package:flutter_app/features/Details_folder/Model/details_Note_Model.dart';
+import 'package:flutter_app/features/Note/Models/folder_model.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Colors.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/Data_Icons.dart';
 import 'package:flutter_app/features/auth/views/widgets/custom_Text.dart';

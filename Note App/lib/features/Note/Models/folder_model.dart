@@ -15,15 +15,16 @@ class FolderModel {
     required this.icon,
   });
 
-  factory FolderModel.fromJson(Map<String, dynamic> json) {
+  factory FolderModel.fromMap(Map<String, dynamic> map) {
     return FolderModel(
-      id: json['id'],
-      title: json['title'],
-      notesCount: json['notes_count'],
-      colors: List<Color>.from(json['colors'].map((color) => Color(color))),
-      icon: IconData(json['icon'], fontFamily: 'MaterialIcons'),
+      id: map['id'].toString(),
+      title: map['titel'] ?? '', // لاحظ إنها titel في السوبابيز عندك
+      notesCount: "0",
+      colors: [Color(map['color'] as int)],
+      icon: IconData(int.parse(map['icon']), fontFamily: 'MaterialIcons'),
     );
   }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
