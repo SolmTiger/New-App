@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/Components/custom_elevatedbutton.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
@@ -137,6 +139,9 @@ class _New_FolderState extends State<New_Folder> {
                             return custom_elevatedbutton(
                               text: 'Create Folder',
                               onpressed: () {
+                                log(
+                                  "Create button pressed with folder name: ${text_Controller.text}",
+                                );
                                 if (text_Controller.text.isNotEmpty) {
                                   final folder = FolderModel(
                                     id: DateTime.now().toIso8601String(),

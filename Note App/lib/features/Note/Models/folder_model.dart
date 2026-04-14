@@ -16,12 +16,21 @@ class FolderModel {
   });
 
   factory FolderModel.fromMap(Map<String, dynamic> map) {
+    // 1. استخراج قيمة اللون الأساسي من سوبابيز
+    final int mainColorValue = map['color'] as int;
+    final Color mainColor = Color(mainColorValue);
+
     return FolderModel(
       id: map['id'].toString(),
-      title: map['titel'] ?? '', // لاحظ إنها titel في السوبابيز عندك
+      // تأكد هل هي 'titel' أم 'title' في قاعدة البيانات لكي لا يظهر الاسم فارغاً
+      title: map['titel'] ?? map['title'] ?? 'No Title',
       notesCount: "0",
-      colors: [Color(map['color'] as int)],
-      icon: IconData(int.parse(map['icon']), fontFamily: 'MaterialIcons'),
+      // ✅ الحل: نمرر لونين (اللون الأساسي + نسخة منه بشفافية مختلفة)
+      colors: [mainColor, mainColor.withOpacity(0.7)],
+      icon: IconData(
+        int.parse(map['icon'].toString()),
+        fontFamily: 'MaterialIcons',
+      ),
     );
   }
 

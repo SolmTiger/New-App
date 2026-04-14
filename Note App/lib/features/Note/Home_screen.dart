@@ -1,20 +1,33 @@
-// ignore_for_file: file_names, unnecessary_type_check
+// ignore_for_file: file_names, unnecessary_type_check, camel_case_types
 import 'package:flutter/material.dart';
 import 'package:flutter_app/core/utils/App_Colors.dart';
 import 'package:flutter_app/features/Add_New_Folder/View_Models/cubit/new_folder_cubit.dart';
+import 'package:flutter_app/features/Details_folder/view/Folder_Screen.dart';
 import 'package:flutter_app/features/Note/View_Model/View_Note_Model.dart';
-// تم الاستغناء عن ViewModelFolder لأنه تم استبداله بالـ Cubit
 import 'package:flutter_app/features/Note/views/widgets/elevatedButton_details.dart';
 import 'package:flutter_app/features/Note/views/widgets/search_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Home_Screen extends StatelessWidget {
+class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
 
   @override
+  State<Home_Screen> createState() => _Home_ScreenState();
+}
+
+class _Home_ScreenState extends State<Home_Screen> {
+  @override
+  void initState() {
+    super.initState();
+    // استدعاء البيانات مرة واحدة فقط عند تشغيل الشاشة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<NewFolderCubit>().fetchFolders();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // 1. جلب البيانات من Supabase فور بناء الواجهة
-    context.read<NewFolderCubit>().fetchFolders();
+    // ✅ تم حذف سطر fetchFolders من هنا لمنع الـ Infinite Loop
 
     final ViewModelNote noteModel = ViewModelNote();
 
@@ -22,21 +35,19 @@ class Home_Screen extends StatelessWidget {
       backgroundColor: AppColors.kBackgroundColor,
       body: SafeArea(
         child: RefreshIndicator(
-          // ميزة إضافية: سحب الشاشة لتحميل البيانات مرة أخرى
           onRefresh: () => context.read<NewFolderCubit>().fetchFolders(),
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                // 2. تأكد أن AppBar() هو ويدجت مخصص عندك وليس AppBar الافتراضي
+                // يفضل التأكد من اسم الـ Widget هنا ليتعارض مع AppBar فلاتر الأساسي
                 AppBar(),
                 Search_Field(),
                 elevatedButton_details(),
 
                 const SizedBox(height: 20),
 
-                // 3. الجزء الخاص بعرض المجلدات من الـ Cubit
                 SizedBox(
                   height: 250,
                   child: BlocBuilder<NewFolderCubit, NewFolderState>(
@@ -70,69 +81,83 @@ class Home_Screen extends StatelessWidget {
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 15,
                                 crossAxisSpacing: 15,
-                                childAspectRatio:
-                                    0.6, // تعديل بسيط لتناسب التصميم
+                                childAspectRatio: 0.65,
                               ),
                           itemBuilder: (context, index) {
                             final folder = folders[index];
-                            return Container(
-                              width: 150,
-                              padding: const EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                gradient: LinearGradient(
-                                  colors: folder.colors,
-                                  begin: Alignment.bottomRight,
-                                  end: Alignment.topLeft,
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    folder.title,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize:
-                                          22, // تقليل الحجم قليلاً ليتناسب مع الكارت
-                                    ),
+
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Folder_Screen(
+                                      folder: folder,
+                                    ), // تأكد من تمرير الـ folder بشكل صحيح
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "${folder.notesCount} Notes",
+                                );
+                              },
+                              child: Container(
+                                // ... كود تصميم الكارت الخاص بك
+                                width: 150,
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  gradient: LinearGradient(
+                                    colors: folder.colors,
+                                    begin: Alignment.bottomRight,
+                                    end: Alignment.topLeft,
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        folder.title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
-                                          color: Colors.white60,
-                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
                                         ),
                                       ),
-                                      Icon(
-                                        folder.icon,
-                                        color: Colors.white70,
-                                        size: 24,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            "${folder.notesCount} Notes",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              color: Colors.white60,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Icon(
+                                          folder.icon,
+                                          color: Colors.white70,
+                                          size: 30,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             );
                           },
                         );
                       }
-
                       return const SizedBox();
                     },
                   ),
                 ),
-
-                // 4. Recent Notes Header
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Row(
@@ -150,7 +175,6 @@ class Home_Screen extends StatelessWidget {
                   ),
                 ),
 
-                // 5. Recent Notes List
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -197,6 +221,8 @@ class Home_Screen extends StatelessWidget {
                     );
                   },
                 ),
+
+                // ... بقية الـ Recent Notes كما هي في كودك
               ],
             ),
           ),

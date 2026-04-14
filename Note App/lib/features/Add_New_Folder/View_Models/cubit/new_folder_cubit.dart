@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter_app/features/Note/Models/folder_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -6,53 +7,74 @@ part 'new_folder_state.dart';
 
 class NewFolderCubit extends Cubit<NewFolderState> {
   final _supabase = Supabase.instance.client;
+
+  // نستخدم القائمة هنا كـ Cache محلي إذا احتجنا الوصول إليها لاحقاً
   List<FolderModel> allFolders = [];
 
   NewFolderCubit() : super(NewFolderInitial());
 
+  // --- 1. جلب البيانات ---
   Future<void> fetchFolders() async {
     try {
       emit(NewFolderLoading());
-      final data = await _supabase.from('Folder').select().order('created_at');
 
-      allFolders = (data as List)
-          .map((json) => FolderModel.fromMap(json))
-          .toList();
+      // جلب البيانات من جدول Folder وترتيبها حسب الأحدث
+      final List<dynamic> data = await _supabase
+          .from('Folder')
+          .select()
+          .order('created_at', ascending: false);
+
+      // تحويل JSON القادم من سوبابيز إلى Object Model
+      allFolders = data.map((json) => FolderModel.fromMap(json)).toList();
+
+      log("Fetched ${allFolders.length} folders successfully.");
 
       emit(NewFolderSuccess(folders: List.from(allFolders)));
     } catch (e) {
-      emit(NewFolderError(message: "Error fetching: ${e.toString()}"));
+      log("Fetch Error: ${e.toString()}");
+      emit(
+        NewFolderError(message: "حدث خطأ أثناء جلب المجلدات: ${e.toString()}"),
+      );
     }
   }
 
+  // --- 2. إضافة مجلد جديد ---
   void addFolder({required FolderModel newFolder}) async {
     try {
+      // نترك الواجهة في حالة تحميل أثناء الإضافة
       emit(NewFolderLoading());
 
-      // 1. الحفظ في سوبابيز
       await _supabase.from('Folder').insert({
-        'titel': newFolder.title,
+        'title': newFolder.title,
         'icon': newFolder.icon.codePoint
-            .toString(), // شيلنا الـ ? للتأكد من وجود قيمة
-        'color': newFolder.colors[0].value,
+            .toString(), // حفظ الكود الخاص بالأيقونة
+        'color': newFolder.colors[0].value, // حفظ قيمة اللون الأول
       });
 
-      // 2. بدل ما تضيف يدوي، اسحب الداتا كاملة بالـ IDs الجديدة
+      log("Folder added successfully: ${newFolder.title}");
+
+      // ✅ استدعاء fetchFolders مباشرة لتحديث القائمة في الـ UI
       await fetchFolders();
     } catch (e) {
-      emit(NewFolderError(message: "Failed to add folder: ${e.toString()}"));
+      log("Add folder failed: ${e.toString()}");
+      emit(NewFolderError(message: "فشل في إضافة المجلد: ${e.toString()}"));
     }
   }
 
+  // --- 3. حذف مجلد ---
   void deleteFolder(String id) async {
     try {
-      // تحويل الـ id لـ int لأن نوعه في الجدول int8
+      // يفضل عدم عمل Loading كامل للشاشة عند الحذف لتجربة مستخدم أفضل
+      // سنقوم بالحذف مباشرة من سوبابيز
       await _supabase.from('Folder').delete().match({'id': int.parse(id)});
 
-      // تحديث الواجهة بعد المسح
+      log("Folder deleted ID: $id");
+
+      // ✅ تحديث الواجهة بعد المسح
       await fetchFolders();
     } catch (e) {
-      emit(NewFolderError(message: "Delete failed: ${e.toString()}"));
+      log("Delete failed: ${e.toString()}");
+      emit(NewFolderError(message: "فشل في حذف المجلد: ${e.toString()}"));
     }
   }
 }

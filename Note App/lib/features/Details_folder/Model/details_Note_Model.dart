@@ -2,30 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-class FolderModel {
-  final String title;
-  final String notesCount;
-  final List<Color> colors;
-  final IconData? icon;
-
-  var id;
-
-  FolderModel({
-    required this.title,
-    required this.notesCount,
-    required this.colors,
-    this.icon,
-    required String id,
-  });
-}
-
-class Detail_note {
+class Detail_note_Model {
   final String Category;
   final String content;
   final String DateTime;
   final Color color;
 
-  Detail_note({
+  Detail_note_Model({
     required this.Category,
     required this.content,
     required this.DateTime,
